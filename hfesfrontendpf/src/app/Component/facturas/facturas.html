@@ -1,0 +1,119 @@
+<div class="crud-container">
+
+  <!-- Vista lista de facturas -->
+  <div *ngIf="!ventaSeleccionada">
+    <div class="crud-header">
+      <h2>Facturas / Ventas</h2>
+      <input type="text" class="form-control buscador" [(ngModel)]="busqueda"
+             placeholder="Buscar por factura, cajero o cliente..." />
+    </div>
+
+    <div class="alert alert-danger" *ngIf="mensajeError">{{ mensajeError }}</div>
+
+    <table class="tabla-crud" *ngIf="ventasFiltradas.length > 0">
+      <thead>
+        <tr>
+          <th># Factura</th>
+          <th>Fecha</th>
+          <th>Cajero</th>
+          <th>Cliente</th>
+          <th>Método Pago</th>
+          <th>Caja</th>
+          <th class="col-total">Total</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let venta of ventasFiltradas" class="fila-venta">
+          <td><strong>{{ venta.numeroFactura }}</strong></td>
+          <td>{{ venta.fechaVenta | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ venta.usuario?.nombre }}</td>
+          <td>{{ venta.cliente?.nombre }}</td>
+          <td>{{ venta.metodoPago?.nombre }}</td>
+          <td>Caja #{{ venta.caja?.idCaja }}</td>
+          <td class="col-total">Q {{ venta.total | number:'1.2-2' }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="seleccionarVenta(venta)">
+              Ver Detalle
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="sin-datos" *ngIf="ventasFiltradas.length === 0 && !cargando">
+      No hay facturas registradas.
+    </p>
+    <p class="sin-datos" *ngIf="cargando">Cargando...</p>
+  </div>
+
+  <!-- Vista detalle de una factura -->
+  <div *ngIf="ventaSeleccionada" class="detalle-container">
+
+    <div class="detalle-header">
+      <button class="btn btn-secondary btn-sm" (click)="cerrarDetalle()">← Volver</button>
+      <h2>Detalle de Factura</h2>
+    </div>
+
+    <!-- Encabezado de la factura -->
+    <div class="factura-encabezado">
+      <div class="encabezado-grid">
+        <div class="enc-item">
+          <span class="enc-label">No. Factura</span>
+          <span class="enc-valor">{{ ventaSeleccionada.numeroFactura }}</span>
+        </div>
+        <div class="enc-item">
+          <span class="enc-label">Fecha</span>
+          <span class="enc-valor">{{ ventaSeleccionada.fechaVenta | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+        </div>
+        <div class="enc-item">
+          <span class="enc-label">Cajero</span>
+          <span class="enc-valor">{{ ventaSeleccionada.usuario?.nombre }}</span>
+        </div>
+        <div class="enc-item">
+          <span class="enc-label">Cliente</span>
+          <span class="enc-valor">{{ ventaSeleccionada.cliente?.nombre }}</span>
+        </div>
+        <div class="enc-item">
+          <span class="enc-label">Método de Pago</span>
+          <span class="enc-valor">{{ ventaSeleccionada.metodoPago?.nombre }}</span>
+        </div>
+        <div class="enc-item">
+          <span class="enc-label">Caja</span>
+          <span class="enc-valor">Caja #{{ ventaSeleccionada.caja?.idCaja }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Líneas de detalle -->
+    <table class="tabla-crud tabla-detalle">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Código</th>
+          <th class="text-right">Precio Unit.</th>
+          <th class="text-right">Cantidad</th>
+          <th class="text-right">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of detallesVenta">
+          <td>{{ d.producto?.nombre }}</td>
+          <td>{{ d.producto?.codigoBarras }}</td>
+          <td class="text-right">Q {{ d.precioUnitario | number:'1.2-2' }}</td>
+          <td class="text-right">{{ d.cantidad }}</td>
+          <td class="text-right"><strong>Q {{ d.subtotal | number:'1.2-2' }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="sin-datos" *ngIf="detallesVenta.length === 0">Sin detalles registrados.</p>
+
+    <!-- Total -->
+    <div class="factura-total">
+      <span>TOTAL</span>
+      <span>Q {{ ventaSeleccionada.total | number:'1.2-2' }}</span>
+    </div>
+
+  </div>
+</div>

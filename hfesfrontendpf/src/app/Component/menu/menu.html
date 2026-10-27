@@ -1,0 +1,39 @@
+<div class="menu-layout">
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <h1>HFES</h1>
+      <p>Rincón Guatemalteco</p>
+    </div>
+
+    <ul class="nav-list">
+      <!-- Todos los roles del menú principal -->
+      <li><a routerLink="/categorias" routerLinkActive="active">Categorías</a></li>
+      <li><a routerLink="/clientes" routerLinkActive="active">Clientes</a></li>
+      <li><a routerLink="/productos" routerLinkActive="active">Productos</a></li>
+      <li><a routerLink="/roles" routerLinkActive="active">Roles</a></li>
+
+      <!-- Solo Admin ve Usuarios -->
+      <li *ngIf="esAdmin">
+        <a routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
+      </li>
+
+      <!-- Admin y Sub Admin ven Facturas -->
+      <li *ngIf="esAdmin || esSubAdmin">
+        <a routerLink="/facturas" routerLinkActive="active">Facturas</a>
+      </li>
+
+      <!-- Perfil visible para todos -->
+      <li><a routerLink="/perfil" routerLinkActive="active">Mi Perfil</a></li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <span class="sidebar-user">{{ usuario?.nombre }}</span>
+      <span class="sidebar-rol">{{ usuario?.rol?.nombre }}</span>
+      <button class="btn-salir" (click)="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

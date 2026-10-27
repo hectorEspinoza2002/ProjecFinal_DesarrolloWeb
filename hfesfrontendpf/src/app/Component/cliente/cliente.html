@@ -1,0 +1,64 @@
+<div class="crud-container">
+  <div class="crud-header">
+    <h2>Gestión de Clientes</h2>
+    <button class="btn btn-primary" (click)="abrirFormularioNuevo()">+ Nuevo Cliente</button>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="mensajeError">{{ mensajeError }}</div>
+
+  <!-- Formulario -->
+  <div class="formulario-card" *ngIf="mostrarFormulario">
+    <h3>{{ modoEdicion ? 'Editar Cliente' : 'Nuevo Cliente' }}</h3>
+
+    <div class="form-group">
+      <label for="nit">NIT</label>
+      <input id="nit" type="text" class="form-control" [(ngModel)]="clienteSeleccionado.nit" placeholder="Ej: 12345678" />
+    </div>
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" type="text" class="form-control" [(ngModel)]="clienteSeleccionado.nombre" placeholder="Nombre completo" />
+    </div>
+    <div class="form-group">
+      <label for="direccion">Dirección</label>
+      <input id="direccion" type="text" class="form-control" [(ngModel)]="clienteSeleccionado.direccion" placeholder="Dirección" />
+    </div>
+    <div class="form-group">
+      <label for="telefono">Teléfono</label>
+      <input id="telefono" type="text" class="form-control" [(ngModel)]="clienteSeleccionado.telefono" placeholder="Ej: 55551234" />
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-success" (click)="guardar()">Guardar</button>
+      <button class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <table class="tabla-crud" *ngIf="clientes.length > 0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>NIT</th>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientes">
+        <td>{{ cliente.idCliente }}</td>
+        <td>{{ cliente.nit }}</td>
+        <td>{{ cliente.nombre }}</td>
+        <td>{{ cliente.direccion }}</td>
+        <td>{{ cliente.telefono }}</td>
+        <td class="acciones">
+          <button class="btn btn-warning btn-sm" (click)="editarCliente(cliente)">Editar</button>
+          <button class="btn btn-danger btn-sm" (click)="eliminar(cliente.idCliente)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="sin-datos" *ngIf="clientes.length === 0">No hay clientes registrados.</p>
+</div>

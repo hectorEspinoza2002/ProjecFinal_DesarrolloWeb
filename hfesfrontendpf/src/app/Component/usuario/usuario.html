@@ -1,0 +1,84 @@
+<div class="crud-container">
+  <div class="crud-header">
+    <h2>Gestión de Usuarios</h2>
+    <button class="btn btn-primary" (click)="abrirFormularioNuevo()">+ Nuevo Usuario</button>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="mensajeError">{{ mensajeError }}</div>
+
+  <!-- Formulario -->
+  <div class="formulario-card" *ngIf="mostrarFormulario">
+    <h3>{{ modoEdicion ? 'Editar Usuario' : 'Nuevo Usuario' }}</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="nombre">Nombre Completo</label>
+        <input id="nombre" type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.nombre" placeholder="Nombre completo" />
+      </div>
+      <div class="form-group">
+        <label for="usuario">Usuario</label>
+        <input id="usuario" type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.usuario" placeholder="Nombre de usuario" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="password">Contraseña <span *ngIf="modoEdicion">(dejar igual si no cambia)</span></label>
+        <input id="password" type="password" class="form-control" [(ngModel)]="usuarioSeleccionado.password" placeholder="Contraseña" />
+      </div>
+      <div class="form-group">
+        <label for="rol">Rol</label>
+        <select id="rol" class="form-control" [(ngModel)]="rolIdSeleccionado">
+          <option value="0">-- Seleccionar Rol --</option>
+          <option *ngFor="let rol of roles" [value]="rol.idRole">{{ rol.nombre }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="estado">Estado</label>
+      <select id="estado" class="form-control" [(ngModel)]="usuarioSeleccionado.estado">
+        <option [value]="1">Activo</option>
+        <option [value]="0">Inactivo</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-success" (click)="guardar()">Guardar</button>
+      <button class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <table class="tabla-crud" *ngIf="usuarios.length > 0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Usuario</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usr of usuarios">
+        <td>{{ usr.idUsuario }}</td>
+        <td>{{ usr.nombre }}</td>
+        <td>{{ usr.usuario }}</td>
+        <td>{{ usr.rol?.nombre }}</td>
+        <td>
+          <span [class]="usr.estado === 1 ? 'badge badge-activo' : 'badge badge-inactivo'">
+            {{ estadoLabel(usr.estado) }}
+          </span>
+        </td>
+        <td class="acciones">
+          <button class="btn btn-warning btn-sm" (click)="editarUsuario(usr)">Editar</button>
+          <button class="btn btn-danger btn-sm" (click)="eliminar(usr.idUsuario)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="sin-datos" *ngIf="usuarios.length === 0">No hay usuarios registrados.</p>
+</div>

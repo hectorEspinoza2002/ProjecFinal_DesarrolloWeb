@@ -17,7 +17,7 @@ import com.hespinoza.casasescuintleco.hfes.Model.Entity.Categoria;
 import com.hespinoza.casasescuintleco.hfes.Service.CategoriaService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9090")
+@CrossOrigin(origins = {"http://localhost:9090", "http://localhost:4200"})
 public class CategoriaController {
 
     @Autowired

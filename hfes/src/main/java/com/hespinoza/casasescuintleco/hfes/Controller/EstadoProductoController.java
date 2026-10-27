@@ -17,7 +17,7 @@ import com.hespinoza.casasescuintleco.hfes.Model.Entity.EstadoProducto;
 import com.hespinoza.casasescuintleco.hfes.Service.EstadoProductoService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9090")
+@CrossOrigin(origins = {"http://localhost:9090", "http://localhost:4200"})
 public class EstadoProductoController {
 
     @Autowired

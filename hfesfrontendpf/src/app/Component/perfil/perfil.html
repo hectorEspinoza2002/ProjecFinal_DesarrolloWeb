@@ -1,0 +1,33 @@
+<div class="perfil-container" *ngIf="usuario">
+  <div class="perfil-card">
+    <div class="perfil-avatar">
+      <span>{{ usuario?.nombre?.charAt(0)?.toUpperCase() }}</span>
+    </div>
+
+    <h2>{{ usuario?.nombre }}</h2>
+    <p class="perfil-rol">{{ usuario?.rol?.nombre }}</p>
+
+    <div class="perfil-info">
+      <div class="info-row">
+        <span class="info-label">Usuario</span>
+        <span class="info-value">{{ usuario?.usuario }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Nombre completo</span>
+        <span class="info-value">{{ usuario?.nombre }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Rol</span>
+        <span class="info-value">{{ usuario?.rol?.nombre }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Estado</span>
+        <span [class]="estadoClase">{{ estadoLabel }}</span>
+      </div>
+    </div>
+
+    <button class="btn btn-danger btn-logout" (click)="cerrarSesion()">
+      Cerrar Sesión
+    </button>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+<div class="pv-layout">
+
+  <!-- Barra superior -->
+  <div class="pv-topbar">
+    <div class="pv-topbar-left">
+      <span class="pv-title">Punto de Venta</span>
+      <span class="pv-caja" *ngIf="cajaAsignada">Caja #{{ cajaAsignada?.idCaja }}</span>
+      <span class="pv-caja sin-caja" *ngIf="!cajaAsignada">Sin caja asignada</span>
+    </div>
+    <div class="pv-topbar-right">
+      <span class="pv-cajero">{{ usuarioSesion?.nombre }}</span>
+      <button class="btn btn-sm btn-secondary" (click)="cerrarSesion()">Salir</button>
+    </div>
+  </div>
+
+  <!-- Alertas -->
+  <div class="pv-alerts">
+    <div class="alert alert-danger" *ngIf="mensajeError">{{ mensajeError }}</div>
+    <div class="alert alert-success" *ngIf="mensajeExito">{{ mensajeExito }}</div>
+  </div>
+
+  <!-- Cuerpo dividido -->
+  <div class="pv-body">
+
+    <!-- Panel izquierdo: Productos -->
+    <div class="panel-productos">
+      <div class="panel-header">
+        <h3>Productos</h3>
+        <input type="text" class="form-control buscador" [(ngModel)]="busqueda"
+               placeholder="Buscar por nombre o código..." />
+      </div>
+
+      <div class="productos-grid">
+        <div class="producto-card" *ngFor="let p of productosFiltrados"
+             (click)="agregarAlCarrito(p)">
+          <div class="producto-nombre">{{ p.nombre }}</div>
+          <div class="producto-codigo">{{ p.codigoBarras }}</div>
+          <div class="producto-precio">Q {{ p.precioVenta | number:'1.2-2' }}</div>
+          <div class="producto-stock">Stock: {{ p.stock }}</div>
+        </div>
+      </div>
+
+      <p class="sin-datos" *ngIf="productosFiltrados.length === 0">No se encontraron productos.</p>
+    </div>
+
+    <!-- Panel derecho: Carrito -->
+    <div class="panel-carrito">
+      <div class="panel-header">
+        <h3>Carrito</h3>
+        <button class="btn btn-sm btn-secondary" (click)="limpiarCarrito()" *ngIf="carrito.length > 0">
+          Limpiar
+        </button>
+      </div>
+
+      <div class="carrito-lista">
+        <div class="carrito-item" *ngFor="let item of carrito">
+          <div class="item-info">
+            <span class="item-nombre">{{ item.producto.nombre }}</span>
+            <span class="item-precio">Q {{ item.producto.precioVenta | number:'1.2-2' }} c/u</span>
+          </div>
+          <div class="item-controles">
+            <button class="btn-qty" (click)="cambiarCantidad(item, -1)">−</button>
+            <span class="item-qty">{{ item.cantidad }}</span>
+            <button class="btn-qty" (click)="cambiarCantidad(item, 1)">+</button>
+          </div>
+          <div class="item-subtotal">Q {{ item.subtotal | number:'1.2-2' }}</div>
+          <button class="btn-quitar" (click)="quitarDelCarrito(item)" title="Quitar">✕</button>
+        </div>
+
+        <p class="carrito-vacio" *ngIf="carrito.length === 0">
+          Haz clic en un producto para agregarlo.
+        </p>
+      </div>
+
+      <!-- Resumen -->
+      <div class="carrito-resumen" *ngIf="carrito.length > 0">
+        <div class="resumen-row total-row">
+          <span>TOTAL</span>
+          <span>Q {{ total | number:'1.2-2' }}</span>
+        </div>
+
+        <div class="form-group mt-12">
+          <label>Método de Pago</label>
+          <select class="form-control" [(ngModel)]="metodoPagoSeleccionado">
+            <option value="0">-- Seleccionar --</option>
+            <option *ngFor="let mp of metodosPago" [value]="mp.idMetodoPago">{{ mp.nombre }}</option>
+          </select>
+        </div>
+
+        <button class="btn btn-cobrar" (click)="procesarVenta()" [disabled]="procesando">
+          {{ procesando ? 'Procesando...' : 'Registrar Venta' }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

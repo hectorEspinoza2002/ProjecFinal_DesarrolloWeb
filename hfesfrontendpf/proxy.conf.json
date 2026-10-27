@@ -1,0 +1,28 @@
+{
+  "/roles": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/create_rol": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/update_role": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/delete_role": { "target": "http://localhost:9090", "changeOrigin": true },
+
+  "/categorias": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/create_categoria": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/update_categoria": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/delete_categoria": { "target": "http://localhost:9090", "changeOrigin": true },
+
+  "/clientes": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/create_cliente": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/update_cliente": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/delete_cliente": { "target": "http://localhost:9090", "changeOrigin": true },
+
+  "/productos": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/create_producto": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/update_producto": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/delete_producto": { "target": "http://localhost:9090", "changeOrigin": true },
+
+  "/estados_producto": { "target": "http://localhost:9090", "changeOrigin": true },
+
+  "/usuarios": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/create_usuario": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/update_usuario": { "target": "http://localhost:9090", "changeOrigin": true },
+  "/delete_usuario": { "target": "http://localhost:9090", "changeOrigin": true }
+}

@@ -17,7 +17,7 @@ import com.hespinoza.casasescuintleco.hfes.Model.Entity.Caja;
 import com.hespinoza.casasescuintleco.hfes.Service.CajaService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9090")
+@CrossOrigin(origins = {"http://localhost:9090", "http://localhost:4200"})
 public class CajaController {
 
     @Autowired

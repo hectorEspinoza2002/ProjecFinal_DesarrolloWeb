@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9090")
+@CrossOrigin(origins = {"http://localhost:9090", "http://localhost:4200"})
 public class RolController {
 
     @Autowired

@@ -70,7 +70,8 @@
               "buildTarget": "hfesfrontendpf:build:production"
             },
             "development": {
-              "buildTarget": "hfesfrontendpf:build:development"
+              "buildTarget": "hfesfrontendpf:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
